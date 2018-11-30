@@ -28,15 +28,23 @@
 #ifndef vtkLinearSubdivisionFilter2_h
 #define vtkLinearSubdivisionFilter2_h
 
+
 #include "vtkFiltersModelingModule.h" // For export macro
 #include "vtkInterpolatingSubdivisionFilter.h"
 #include "vtkInformation.h"
 #include "vtkInformationVector.h"
+#include <map>
 
 class vtkIntArray;
 class vtkPointData;
 class vtkPoints;
 class vtkPolyData;
+
+class vtkCellArray;
+class vtkCellData;
+class vtkIdList;
+
+
 
 class VTKFILTERSMODELING_EXPORT vtkLinearSubdivisionFilter2 : public vtkInterpolatingSubdivisionFilter
 {
@@ -68,6 +76,12 @@ protected:
                                  vtkIntArray *edgeData,
                                  vtkPoints *outputPts,
                                  vtkPointData *outputPD) override;
+
+  #if VTK_MAJOR_VERSION <= 7
+  int vtkSubdivisionFilterRequestData(vtkInformation *,
+                                      vtkInformationVector **, 
+                                      vtkInformationVector *);
+  #endif
 
 private:
   vtkLinearSubdivisionFilter2(const vtkLinearSubdivisionFilter2&) = delete;
